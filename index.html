@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>البرنامج التعريفي العام للمتدربين - تجمع عسير الصحي</title>
+    <!-- Google Fonts & FontAwesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #214056;
+            --primary-dark: #305b7a;
+            --secondary: #2a4363;
+            --accent: #2a4363;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #cbd5e1;
+            --danger: #ef4444;
+            --success: #10b981;
+            --radius: 14px;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Login Screen Header */
+        .auth-header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .auth-header .header-icon {
+            font-size: 3.2rem;
+            color: white;
+            margin-bottom: 12px;
+        }
+
+        .auth-header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .auth-header p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        /* Modern Segmented Control for Login Switcher */
+        .auth-role-wrapper {
+            padding: 25px 40px 0 40px;
+            background: var(--card-bg);
+        }
+
+        .auth-role-tabs {
+            display: flex;
+            background: #f1f5f9;
+            padding: 6px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            gap: 6px;
+        }
+
+        .auth-role-tabs button {
+            flex: 1;
+            padding: 12px 18px;
+            border: none;
+            background: transparent;
+            font-size: 0.98rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .auth-role-tabs button i {
+            font-size: 1.1rem;
+            transition: transform 0.2s ease;
+        }
+
+        .auth-role-tabs button.active {
+            background: #ffffff;
+            color: var(--primary-dark);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08), 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .auth-role-tabs button.active i {
+            color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        .auth-role-tabs button:hover:not(.active) {
+            color: var(--primary);
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Login Body */
+        .auth-body {
+            padding: 30px 40px 40px 40px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 0.95rem;
+            text-align: right;
+        }
+
+        .input-icon-wrapper {
+            position: relative;
+        }
+
+        .input-icon-wrapper i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 45px 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            background: #f8fafc;
+            transition: all 0.2s;
+            text-align: right;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--secondary);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(20, 184, 166, 0.1);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            width: 100%;
+            transition: opacity 0.2s, transform 0.1s;
+            box-shadow: 0 4px 12px rgba(15, 118, 110, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn:hover {
+            opacity: 0.95;
+            transform: translateY(-1px);
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        /* Navigation Bar */
+        nav {
+            background: var(--primary-dark);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-brand .brand-badge {
+            background: white;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .nav-brand h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-links button:hover, .nav-links button.active {
+            background: white;
+            color: var(--primary-dark);
+        }
+
+        .nav-links button.logout-btn {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.4);
+            color: #fca5a5;
+        }
+
+        .nav-links button.logout-btn:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        /* Tab Content Panes */
+        .tab-content-area {
+            padding: 35px;
+            text-align: right;
+        }
+
+        h2 {
+            color: var(--primary-dark);
+            font-size: 1.35rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Section Title */
+        .accordion-section-title {
+            font-size: 1.15rem;
+            color: var(--primary-dark);
+            margin: 15px 0 20px 0;
+            font-weight: 700;
+            border-bottom: 2px solid var(--secondary);
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            direction: ltr;
+            text-align: left;
+        }
+
+        /* Cards Grid Layout (3 in a row, Left to Right order) */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 10px;
+            direction: ltr;
+        }
+
+        @media (max-width: 900px) {
+            .cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card-item {
+            background: #ffffff;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-start;
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.02rem;
+            direction: ltr;
+            text-align: left;
+            min-height: 120px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+            transition: all 0.25s ease;
+        }
+
+        .card-item:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(33, 64, 86, 0.1);
+            background: #f8fafc;
+        }
+
+        .card-item i {
+            color: var(--accent);
+            align-self: flex-end;
+            font-size: 1.3rem;
+            opacity: 0.85;
+        }
+
+        /* Full-page Inner Reader View */
+        .pdf-viewer-fullpage {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .viewer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f1f5f9;
+            padding: 15px 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .viewer-header h3 {
+            color: var(--primary);
+            font-size: 1.1rem;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .back-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+            width: auto;
+        }
+
+        .back-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* إطار العرض المتناسب مع نسبة العرض للارتفاع للأوراق الأفقية */
+        .viewer-frame-container {
+            width: 100%;
+            position: relative;
+            padding-bottom: 56.25%; /* نسبة 16:9 أفقية تماماً تلغي الفراغ الأسفل */
+            height: 0;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid var(--border-color);
+            background: #ffffff;
+        }
+
+        .viewer-frame-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: #ffffff;
+        }
+
+        /* Quiz Questions */
+        .question-card {
+            background: #f8fafc;
+            padding: 22px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+            direction: ltr;
+        }
+
+        .question-card p {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-main);
+            line-height: 1.5;
+        }
+
+        .options label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: white;
+            padding: 12px 16px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .options label:hover {
+            border-color: var(--secondary);
+            background: #f0fdfa;
+        }
+
+        .options input[type="radio"] {
+            accent-color: var(--primary);
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Admin Table */
+        .table-responsive {
+            overflow-x: auto;
+            margin-top: 15px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        th, td {
+            padding: 14px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: #f8fafc;
+        }
+
+        .delete-single-btn {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .delete-single-btn:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        /* Interactive Certificate */
+        #certificate {
+            background: #fff;
+            border: 10px solid var(--primary-dark);
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            border-radius: 8px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            margin: 20px 0;
+        }
+
+        .cert-logo {
+            width: 180px;
+            height: auto;
+            filter: contrast(120%) brightness(105%);
+        }
+
+        #certificate h1 { font-size: 1.6rem; color: var(--primary-dark); margin-bottom: 5px; }
+        #certificate h2 { font-size: 1.2rem; color: var(--secondary); justify-content: center; margin: 10px 0; }
+        .cert-body { font-size: 1.05rem; color: var(--text-muted); margin: 20px 0; line-height: 1.8; }
+        .cert-footer { display: flex; justify-content: space-between; margin-top: 40px; font-weight: bold; font-size: 0.95rem; color: var(--text-main); }
+
+        @media print {
+            body * { visibility: hidden; }
+            #certificate, #certificate * { visibility: visible; }
+            #certificate { position: absolute; left: 0; top: 0; width: 100%; border: none; box-shadow: none; padding: 20px; }
+            .no-print { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- شاشة تسجيل الدخول المتعددة (متدرب / مشرف) -->
+    <div id="login-screen" class="container">
+        <div class="auth-header">
+            <div class="header-icon"><i class="fa-solid fa-hospital-user"></i></div>
+            <h1>برنامج التوجيه العام للمتدربين الصحيين</h1>
+            <p>تجمع عسير الصحي</p>
+        </div>
+
+        <!-- تبويب الاختيار العصري بين المتدرب والمشرف -->
+        <div class="auth-role-wrapper">
+            <div class="auth-role-tabs">
+                <button id="tab-btn-trainee" class="active" onclick="switchLoginRole('trainee')"><i class="fa-solid fa-user-graduate"></i> دخول المتدربين</button>
+                <button id="tab-btn-admin" onclick="switchLoginRole('admin')"><i class="fa-solid fa-user-shield"></i> دخول المشرف</button>
+            </div>
+        </div>
+
+        <!-- نموذج دخول المتدرب -->
+        <div id="trainee-form-box" class="auth-body">
+            <div class="form-group">
+                <label>اسم المتدرب الثلاثي </label>
+                <div class="input-icon-wrapper">
+                    <i class="fa-solid fa-id-badge"></i>
+                    <input type="text" id="trainee-name" placeholder="أدخل اسمك الكامل هنا">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>رقم الهوية الوطنية </label>
+                <div class="input-icon-wrapper">
+                    <i class="fa-solid fa-address-card"></i>
+                    <input type="text" id="trainee-id" placeholder="أدخل رقم الهوية">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>اسم البرنامج التدريبي</label>
+                <div class="input-icon-wrapper">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <select id="trainee-program">
+                        <option value="">اختر اسم البرنامج التدريبي</option>
+                        <option value="أمراض الجهاز الهضمي لدى الكبار">أمراض الجهاز الهضمي لدى الكبار</option>
+                        <option value="طب القلب لدى الكبار">طب القلب لدى الكبار</option>
+                        <option value="طب العناية الحرجه للكبار">طب العناية الحرجه للكبار</option>
+                        <option value="طب الغدد الصماء والأستقلاب لدى الكبار">طب الغدد الصماء والأستقلاب لدى الكبار</option>
+                        <option value="طب الأجنة والأطفال حديثي الولادة">طب الأجنة والأطفال حديثي الولادة</option>
+                        <option value="العناية المركزة لطب الأطفال">العناية المركزة لطب الأطفال</option>
+                        <option value="أمراض الروماتيزم">أمراض الروماتيزم</option>
+                        <option value="طب امراض الروماتيزم لدى الاطفال">طب امراض الروماتيزم لدى الاطفال</option>
+                        <option value="زمالة الامراض المعدية لدى الكبار">زمالة الامراض المعدية لدى الكبار</option>
+                        <option value="زمالة أمراض الكلى لدى الكبار">زمالة أمراض الكلى لدى الكبار</option>
+                        <option value="جراحة الاوعية الدموية">جراحة الاوعية الدموية</option>
+                        <option value="مناظير المفاصل وجراحة اصابات العظام الرياضية">مناظير المفاصل وجراحة اصابات العظام الرياضية</option>
+                        <option value="برنامج الزماله لطب طوارئ الأطفال">برنامج الزماله لطب طوارئ الأطفال</option>
+                        <option value="زمالة جراحة الأطفال">زمالة جراحة الأطفال</option>
+                        <option value="زمالة جراحة عظام الأطفال">زمالة جراحة عظام الأطفال</option>
+                        <option value="برنامج جراحة أصابات العظام">برنامج جراحة أصابات العظام</option>
+                        <option value="طب الجهاز التنفسي لدى الأطفال">طب الجهاز التنفسي لدى الأطفال</option>
+                        <option value="طب الجهاز الهضمي لدى الأطفال">طب الجهاز الهضمي لدى الأطفال</option>
+                        <option value="طب الاطفال المتقدم">طب الاطفال المتقدم</option>
+                        <option value="برنامج طب الأسرة بأبها">برنامج طب الأسرة بأبها</option>
+                        <option value="جراحة العظام">جراحة العظام</option>
+                        <option value="طب أسنان الاسرة">طب أسنان الاسرة</option>
+                        <option value="اصلاح الاسنان">اصلاح الاسنان</option>
+                        <option value="علاج جذور وعصب الاسنان">علاج جذور وعصب الاسنان</option>
+                        <option value="جراحة الأنف والأذن والحنجرة والرأس والعنق">جراحة الأنف والأذن والحنجرة والرأس والعنق</option>
+                        <option value="الجراحة العامة">الجراحة العامة</option>
+                        <option value="الطب الباطني">الطب الباطني</option>
+                        <option value="طب الأطفال">طب الأطفال</option>
+                        <option value="طب الطوارئ">طب الطوارئ</option>
+                        <option value="طب الأمراض الجلدية">طب الأمراض الجلدية</option>
+                        <option value="جراحة المخ والأعصاب">جراحة المخ والأعصاب</option>
+                        <option value="طب الاعصاب لدى الكبار">طب الاعصاب لدى الكبار</option>
+                        <option value="طب الاعصاب لدى الاطفال">طب الاعصاب لدى الاطفال</option>
+                        <option value="طب جراحة المسالك البولية">طب جراحة المسالك البولية</option>
+                        <option value="برنامج الطب الوقائي بأبها">برنامج الطب الوقائي بأبها</option>
+                        <option value="الطب النفسي">الطب النفسي</option>
+                        <option value="طب وجراحة العيون">طب وجراحة العيون</option>
+                        <option value="جراحة الأطفال">جراحة الأطفال</option>
+                        <option value="برنامج البورد السعودي لأمراض النساء والولادة">برنامج البورد السعودي لأمراض النساء والولادة</option>
+                        <option value="طب التخدير">طب التخدير</option>
+                        <option value="العلاج الطبيعي للجهاز الهيكلي العضلى">العلاج الطبيعي للجهاز الهيكلي العضلى</option>
+                        <option value="الأشعة التشخيصية">الأشعة التشخيصية</option>
+                        <option value="جراحة الفم والوجه والفكين">جراحة الفم والوجه والفكين</option>
+                        <option value="طب تعويضات الاسنان">طب تعويضات الاسنان</option>
+                        <option value="تقويم الأسنان وعظام الوجه والفكين">تقويم الأسنان وعظام الوجه والفكين</option>
+                        <option value="دبلوم تمريض العناية الحرجة لدى الكبار">دبلوم تمريض العناية الحرجة لدى الكبار</option>
+                        <option value="دبلوم تمريض الطوارئ">دبلوم تمريض الطوارئ</option>
+                        <option value="دبلوم طب الطوارئ">دبلوم طب الطوارئ</option>
+                        <option value="تمريض العناية الحرجة لحديثي الولادة">تمريض العناية الحرجة لحديثي الولادة</option>
+                        <option value="الرعاية التنفسية الحرجة">الرعاية التنفسية الحرجة</option>
+                        <option value="دبلوم الصيدلة الأكلينيكية">دبلوم الصيدلة الأكلينيكية</option>
+                        <option value="برنامج طب الاسرة - بيشة">برنامج طب الاسرة - بيشة</option>
+                        <option value="الجراحة العامة - بيشة">الجراحة العامة - بيشة</option>
+                        <option value="الطب الباطني - بيشة">الطب الباطني - بيشة</option>
+                        <option value="جراحة المسالك البولية - بيشة">جراحة المسالك البولية - بيشة</option>
+                        <option value="اصلاح الاسنان - بيشة">اصلاح الاسنان - بيشة</option>
+                        <option value="وحدة تدريبية طب وجراحة امراض النساء و الولادة - بيشة">وحدة تدريبية طب وجراحة امراض النساء و الولادة - بيشة</option>
+                        <option value="طب الاطفال - بيشة">طب الاطفال - بيشة</option>
+                        <option value="طب العناية الحرجة لدى الكبار - بيشة">طب العناية الحرجة لدى الكبار - بيشة</option>
+                        <option value="وحدة تدريبية لبرنامج العظام - بيشة">وحدة تدريبية لبرنامج العظام - بيشة</option>
+                        <option value="أخرى">أخرى</option>
+                    </select>
+                </div>
+            </div>
+            <button class="btn" onclick="login()">تسجيل الدخول إلى المنصة <i class="fa-solid fa-arrow-left-long"></i></button>
+        </div>
+
+        <!-- نموذج دخول المشرف -->
+        <div id="admin-form-box" class="auth-body hidden">
+            <div class="form-group">
+                <label>رمز المرور</label>
+                <div class="input-icon-wrapper">
+                    <i class="fa-solid fa-key"></i>
+                    <input type="password" id="admin-pass" placeholder="أدخل رمز المرور">
+                </div>
+            </div>
+            <button class="btn" onclick="loginAdmin()"><i class="fa-solid fa-right-to-bracket"></i> دخول لوحة التحكم</button>
+        </div>
+    </div>
+
+    <!-- لوحة تحكم المشرف -->
+    <div id="admin-screen" class="container hidden">
+        <div class="auth-header" style="padding: 25px;">
+            <h1><i class="fa-solid fa-chart-pie" style="margin-left: 8px;"></i> لوحة متابعة وتقييم المتدربين</h1>
+            <p>السجلات المحفوظة تلقائياً</p>
+        </div>
+        <div class="tab-content-area">
+            <!-- شريط البحث -->
+            <div class="form-group" style="margin-bottom: 20px;">
+                <div class="input-icon-wrapper">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="search-input" placeholder="ابحث بالاسم أو رقم الهوية..." oninput="filterRecords()">
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>اسم المتدرب</th>
+                            <th>رقم الهوية</th>
+                            <th>اسم البرنامج</th>
+                            <th>حالة الاختبار</th>
+                            <th>تقييم البرنامج</th>
+                            <th>تاريخ الإنجاز</th>
+                            <th>الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="records-body">
+                        <!-- يتم تعبئة السجلات ديناميكياً -->
+                    </tbody>
+                </table>
+            </div>
+            <div style="margin-top: 25px; display: flex; gap: 10px;">
+                <button class="btn" onclick="backToLogin()" style="background: var(--text-muted);"><i class="fa-solid fa-arrow-right-from-bracket"></i> تسجيل الخروج إلى شاشة الدخول</button>
+                <button class="btn" onclick="clearData()" style="background: var(--danger);"><i class="fa-solid fa-trash-can"></i> مسح جميع السجلات</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- محتوى التطبيق الرئيسي للمتدرب -->
+    <div id="main-app" class="container hidden">
+        <nav>
+            <div class="nav-brand">
+                <div class="brand-badge"><i class="fa-solid fa-user-doctor"></i></div>
+                <h3 id="welcome-user">مرحباً</h3>
+            </div>
+            <div class="nav-links">
+                <button onclick="switchTab('content', this)" class="active"><i class="fa-solid fa-book-medical"></i> المحتوى</button>
+                <button onclick="switchTab('quiz', this)"><i class="fa-solid fa-file-pen"></i> الاختبار</button>
+                <button onclick="switchTab('evaluation', this)"><i class="fa-solid fa-star"></i> التقييم</button>
+                <button onclick="logout()" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
+            </div>
+        </nav>
+
+        <div class="tab-content-area">
+            <!-- تبويب المحتوى -->
+            <div id="tab-content" class="tab-pane">
+                
+                <!-- عرض البطاقات الرئيسي -->
+                <div id="content-main-view">
+                    <h2><i class="fa-solid fa-folder-open" style="color: var(--secondary);"></i> محتوى البرنامج التوجيهي (قائمة التحقق)</h2>
+                   
+                    <!-- ORIENTATION CHECKLIST -->
+                    <div class="accordion-section-title"><i class="fa-solid fa-list-check"></i> ORIENTATION CHECKLIST</div>
+                    <div class="cards-grid">
+                        
+                        <div class="card-item" onclick="openDocument('1. Principles of modern model of care. (D.18.1)', 'part1.pdf#page=1&toolbar=0&view=FitH')">
+                            <span>1. Principles of modern model of care. (D.18.1)</span>
+                            <i class="fa-solid fa-heart-pulse"></i>
+                        </div>
+
+                        <div class="card-item" onclick="openDocument('2. Principles of healthcare quality improvement. (D.18.2)', 'part2.pdf#page=1&toolbar=0&view=FitH')">
+                            <span>2. Principles of healthcare quality improvement. (D.18.2)</span>
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+
+                        <div class="card-item" onclick="openDocument('3. Principles of patient safety. (D.18.3)', 'part3.pdf#page=1&toolbar=0&view=FitH')">
+                            <span>3. Principles of patient safety. (D.18.3)</span>
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+
+                        <div class="card-item" onclick="openDocument('4. Principles of medication safety. (D.18.4)', 'part4.pdf#page=1&toolbar=0&view=FitH')">
+                            <span>4. Principles of medication safety. (D.18.4)</span>
+                            <i class="fa-solid fa-pills"></i>
+                        </div>
+
+                        <div class="card-item" onclick="openDocument('5. Principle of fire safety and evacuation plan. (D.18.5)', 'part5.pdf#page=1&toolbar=0&view=FitH')">
+                            <span>5. Principle of fire safety and evacuation plan. (D.18.5)</span>
+                            <i class="fa-solid fa-fire-extinguisher"></i>
+                        </div>
+
+                        <div class="card-item" onclick="openDocument('6. Principles of infection control. (D.18.6)', 'part6.pdf#page=1&toolbar=0&view=FitH')">
+                            <span>6. Principles of infection control. (D.18.6)</span>
+                            <i class="fa-solid fa-pump-soap"></i>
+                        </div>
+
+                        <div class="card-item" onclick="openDocument('7. Principles of bioethics. (D.18.7)', 'part7.pdf#page=1&toolbar=0&view=FitH')">
+                            <span>7. Principles of bioethics. (D.18.7)</span>
+                            <i class="fa-solid fa-scale-balanced"></i>
+                        </div>
+
+                        <div class="card-item" onclick="openDocument('8. Principles of patient rights. (D.18.8)', 'part8.pdf#page=1&toolbar=0&view=FitH')">
+                            <span>8. Principles of patient rights. (D.18.8)</span>
+                            <i class="fa-solid fa-hands-holding-child"></i>
+                        </div>
+
+                        <div class="card-item" onclick="openDocument('9. Principles and ethics of virtual care. (D.18.9)', 'part9.pdf#page=1&toolbar=0&view=FitH')">
+                            <span>9. Principles and ethics of virtual care. (D.18.9)</span>
+                            <i class="fa-solid fa-laptop-medical"></i>
+                        </div>
+
+                        <div class="card-item" onclick="openDocument('10. Principles of canMEDS competencies framework. (D.18.10)', 'part10.pdf#page=1&toolbar=0&view=FitH')">
+                            <span>10. Principles of canMEDS competencies framework. (D.18.10)</span>
+                            <i class="fa-solid fa-award"></i>
+                        </div>
+
+                        <div class="card-item" onclick="openDocument('11. Principles of clinical coding. (D.18.11)', 'part11.pdf#page=1&toolbar=0&view=FitH')">
+                            <span>11. Principles of clinical coding. (D.18.11)</span>
+                            <i class="fa-solid fa-barcode"></i>
+                        </div>
+
+                        <div class="card-item" onclick="openDocument('12. Health records system. (D.18.1)', 'part12.pdf#page=1&toolbar=0&view=FitH')">
+                            <span>12. Health records system. (D.18.1)</span>
+                            <i class="fa-solid fa-file-medical"></i>
+                        </div>
+
+                        <div class="card-item" onclick="openDocument('13. Process of disclosure of medical errors to patients. (H.2)', 'part13.pdf#page=1&toolbar=0&view=FitH')">
+                            <span>13. Process of disclosure of medical errors to patients. (H.2)</span>
+                            <i class="fa-solid fa-comment-medical"></i>
+                        </div>
+
+                        <div class="card-item" onclick="openDocument('Bioethics', 'bioethics.pdf#page=1&toolbar=0&view=FitH')">
+                            <span>Bioethics</span>
+                            <i class="fa-solid fa-scale-balanced"></i>
+                        </div>
+
+                        <div class="card-item" onclick="openDocument('Patient Rights', 'prights.pdf#page=1&toolbar=0&view=FitH')">
+                            <span>Patient Rights</span>
+                            <i class="fa-solid fa-hand-holding-heart"></i>
+                        </div>
+
+                    </div>
+
+                    <br>
+                    <button class="btn" onclick="switchTab('quiz', document.querySelectorAll('.nav-links button')[1])" style="margin-top: 15px;">الانتقال إلى الاختبار التقييمي <i class="fa-solid fa-arrow-left"></i></button>
+                </div>
+
+                <!-- شاشة عرض القارئ الكامل الداخلي -->
+                <div id="content-reader-view" class="pdf-viewer-fullpage hidden">
+                    <div class="viewer-header">
+                        <button class="back-btn" onclick="closeReader()"><i class="fa-solid fa-arrow-right"></i> رجوع</button>
+                        <h3 id="reader-doc-title">العنوان</h3>
+                    </div>
+                    <div class="viewer-frame-container" id="reader-frame-box">
+                        <!-- محتوى الـ PDF ينزل هنا -->
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- تبويب الاختبار -->
+            <div id="tab-quiz" class="tab-pane hidden">
+                <h2><i class="fa-solid fa-pen-to-square" style="color: var(--secondary);"></i> الاختبار التقييمي</h2>
+                <form id="quiz-form">
+                    <div id="questions-container"></div>
+                    <button type="button" class="btn" onclick="submitQuiz()">إرسال <i class="fa-solid fa-paper-plane"></i></button>
+                </form>
+                <div id="quiz-result" style="margin-top: 20px; font-weight: bold; font-size: 1.1rem; text-align: center;"></div>
+            </div>
+
+            <!-- تبويب التقييم -->
+            <div id="tab-evaluation" class="tab-pane hidden">
+                <h2><i class="fa-solid fa-square-poll-vertical" style="color: var(--secondary);"></i> تقييم برنامج التدريب والملاحظات</h2>
+                <div class="form-group">
+                    <label>1. هل كان المحتوى العلمي واضحاً ومناسباً لاحتياجاتك التدريبية؟</label>
+                    <select id="eval-q1">
+                        <option value="ممتاز">ممتاز</option>
+                        <option value="جيد جداً">جيد جداً</option>
+                        <option value="متوسط">متوسط</option>
+                        <option value="سيء">سيء</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>2. كيف تقيم سهولة استخدام المنصة وتجربة التصفح؟</label>
+                    <select id="eval-q2">
+                        <option value="سهلة، مرنة، وممتازة">مرنة، وممتازة</option>
+                        <option value="متوسطة">متوسطة</option>
+                        <option value="سيئة">سيئة</option>
+                    </select>
+                </div>
+                <button class="btn" onclick="completeEvaluation()">حفظ التقييم وإصدار الشهادة <i class="fa-solid fa-certificate"></i></button>
+            </div>
+
+            <!-- تبويب الشهادة -->
+            <div id="tab-certificate" class="tab-pane hidden">
+                <div id="certificate">
+                    <!-- الشعار الأساسي -->
+                    <img src="PHOTO-2026-09-10-11-32-12.jpg" alt="شعار تجمع عسير الصحي" class="cert-logo">
+                <h2 style="color: #1695c0; font-weight: 700;">إدارة الشؤون الأكاديمية والتدريب و البحث</h2>     
+                    <hr style="width: 40%; margin: 15px auto; border: 0; border-top: 2px solid var(--border-color);">
+                    <p class="cert-body">تؤكد إدارة الشؤون الأكاديمية والتدريب بأن المتدرب/ـة:</p>
+                    <h2 id="cert-name" style="color: var(--primary); font-size: 1.6rem;">اسم المتدرب</h2>
+                    <p class="cert-body">قد أتم بنجاح متطلبات برنامج التوجيه العام، وقائمة التحقق لبرامج الدراسات العليا في تجمع عسير الصحي، واجتاز الاختبار التقييمي بنجاح.</p>
+                    <div class="cert-footer">
+                        <div>تاريخ الإصدار: <span id="cert-date"></span></div>
+                        <div>الاعتماد: إدارة التدريب</div>
+                    </div>
+                </div>
+                <button class="btn no-print" onclick="window.print()" style="background-color: var(--success); margin-top: 20px;"><i class="fa-solid fa-print"></i> طباعة الشهادة / حفظ كملف PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const quizData = [
+            { q: "1. What is the primary standard for the principle of Autonomy in bioethics?", options: ["Making decisions entirely on behalf of the patient", "Respecting the patient's right to make informed decisions regarding their care", "Focusing solely on the physician's preference"], answer: 1 },
+            { q: "2. What does the principle of Beneficence mean in healthcare?", options: ["Avoiding unnecessary harm", "Acting always in the best interest of the patient", "Reducing medication costs for the hospital"], answer: 1 },
+            { q: "3. What does Non-maleficence represent in medical practice?", options: ["Avoiding preventable harm and unnecessary risks to the patient", "Forcing the patient to accept treatment", "Concealing medical errors"], answer: 0 },
+            { q: "4. What does Justice mean in the context of healthcare ethics?", options: ["Giving priority to relatives and acquaintances", "Treating patients fairly and equitably without discrimination", "Providing advanced devices only for management"], answer: 1 },
+            { q: "5. Which of the following is considered a common obstacle to proper ethical conduct?", options: ["Adequate time for discussion", "Excellent communication skills", "Uncertainty, especially in terminal illness and prognosis"], answer: 2 },
+            { q: "6. What is the correct approach to improve ethical conduct and patient interaction?", options: ["Active listening and using clear, simple language", "Ending consultations quickly without answering questions", "Avoiding qualified interpreters"], answer: 0 },
+            { q: "7. One of the essential patient rights in healthcare is:", options: ["Not knowing the healthcare team members", "Receiving appropriate healthcare without discrimination based on race, gender, or religion", "Restricting families from knowing any details"], answer: 1 },
+            { q: "8. What does the patient's right to Informed Consent entail?", options: ["Giving patients the right to give or refuse consent for treatment within applicable law", "Forcing patients to sign forms upon admission", "Prohibiting patients from inquiring about medications"], answer: 0 },
+            { q: "9. What is the primary purpose of the General Orientation Program for new trainees?", options: ["Evaluating previous academic grades", "Preparing every new trainee to begin clinical training safely and confidently", "Increasing working hours"], answer: 1 },
+            { q: "10. What does 'Level 1 - Direct Supervision' mean in clinical practice?", options: ["Supervisor is off-site but reachable", "Supervisor reviews the encounter after completion", "Supervisor is physically present with the trainee during patient care"], answer: 2 },
+            { q: "11. What is the first essential step when identifying a gap or problem in Quality Improvement?", options: ["Ignoring the issue", "Clearly identifying the gap or problem", "Replacing all healthcare staff"], answer: 1 },
+            { q: "12. Which framework is used to test small-scale changes in healthcare quality improvement?", options: ["Plan-Do-Study-Act (PDSA) cycle", "SBAR tool", "RACE protocol"], answer: 0 },
+            { q: "13. What is the correct practice for patient identification prior to providing care?", options: ["Asking for the bed number only", "Using at least two approved identifiers (e.g., full name and ID/MRN)", "Relying on physical appearance"], answer: 1 },
+            { q: "14. Which structured tool is recommended for standardized communication of critical information?", options: ["SBAR framework", "PDSA cycle", "PASS protocol"], answer: 0 },
+            { q: "15. What is the mandatory rule for High-Alert Medications?", options: ["Dispensing rapidly without review", "Completing an independent double-check process", "Storing in open areas"], answer: 1 },
+            { q: "16. What is the difference between a Medication Error and a Near Miss?", options: ["A medication error reaches the patient, whereas a near miss is intercepted before reaching the patient", "They are identical terms", "Near miss occurs only in the pharmacy"], answer: 0 },
+            { q: "17. What do the letters in the R.A.C.E. fire safety protocol stand for?", options: ["Rescue, Alarm, Contain, Extinguish/Evacuate", "Read, Assess, Compare, Evaluate", "Report, Action, Clean, Educate"], answer: 0 },
+            { q: "18. When operating a fire extinguisher, what do the steps in P.A.S.S. mean?", options: ["Push, Activate, Stop, Spray", "Pull, Aim, Squeeze, Sweep", "Protect, Alarm, Safety, Secure"], answer: 1 },
+            { q: "19. What is the most critical routine for preventing Healthcare-Associated Infections (HAIs)?", options: ["Changing uniforms hourly", "Proper and timely Hand Hygiene", "Closing hospital gates"], answer: 1 },
+            { q: "20. What are the WHO 5 Moments for Hand Hygiene?", options: ["Before patient touch, before clean procedure, after fluid exposure, after patient touch, and after touching surroundings", "Only upon entering and leaving the hospital", "After meal breaks only"], answer: 0 },
+            { q: "21. What is the immediate correct action following a Needlestick or sharps injury?", options: ["Covering with a bandage silently", "Gently encouraging bleeding, washing with soap and water, and reporting immediately", "Applying harsh chemical disinfectants"], answer: 1 },
+            { q: "22. Which of the following is considered an UNSAFE practice when handling sharps?", options: ["Disposing immediately into a puncture-proof container", "Ensuring containers are not overfilled beyond 3/4 full", "Recapping needles manually after use"], answer: 2 },
+            { q: "23. What is an essential ethical standard required in Virtual Care (Telemedicine)?", options: ["Ignoring patient identity verification", "Verifying patient identity, location, and obtaining consent before the encounter", "Using personal social media accounts for consultations"], answer: 1 },
+            { q: "24. Within the CanMEDS framework, which role represents the central, integrating role of a competent physician?", options: ["Communicator", "Medical Expert", "Leader"], answer: 1 },
+            { q: "25. What does the 'Collaborator' role in the CanMEDS framework require?", options: ["Working effectively with healthcare teams to provide safe, person-centered care", "Making all decisions independently", "Competing with other departments"], answer: 0 },
+            { q: "26. What is the primary purpose of accurate clinical documentation and Clinical Coding?", options: ["Increasing paperwork volume", "Supporting care data, reporting, funding, planning, and quality monitoring", "Hiding medical errors"], answer: 1 },
+            { q: "27. What is strictly PROHIBITED when correcting an entry in a Health Record?", options: ["Using the approved amendment process", "Deleting or concealing original information completely", "Documenting facts objectively"], answer: 1 },
+            { q: "28. What is the immediate priority when a medical error or clinical incident occurs?", options: ["Concealing the incident from the patient and administration", "Attending to the immediate safety of the patient and notifying the responsible supervisor without delay", "Blaming nursing staff publicly"], answer: 1 },
+            { q: "29. What is meant by 'Burnout' among clinical trainees?", options: ["High energy and interest in conferences", "Persistent exhaustion, detachment, and reduced effectiveness related to prolonged work stress", "Rapid recovery from clinical events"], answer: 1 },
+            { q: "30. What is the appropriate professional action when experiencing severe mental health stress or well-being concerns during training?", options: ["Hiding the problem until training ends", "Seeking early confidential help through the Well-Being program and institutional support pathways", "Leaving the program without notice"], answer: 1 }
+        ];
+
+        let currentUser = null;
+        let currentId = null;
+        let currentProgram = null;
+
+        function switchLoginRole(role) {
+            document.getElementById('tab-btn-trainee').classList.remove('active');
+            document.getElementById('tab-btn-admin').classList.remove('active');
+            
+            if (role === 'trainee') {
+                document.getElementById('tab-btn-trainee').classList.add('active');
+                document.getElementById('trainee-form-box').classList.remove('hidden');
+                document.getElementById('admin-form-box').classList.add('hidden');
+            } else {
+                document.getElementById('tab-btn-admin').classList.add('active');
+                document.getElementById('admin-form-box').classList.remove('hidden');
+                document.getElementById('trainee-form-box').classList.add('hidden');
+            }
+        }
+
+        function openDocument(title, pdfUrl) {
+            document.getElementById('reader-doc-title').innerText = title;
+            document.getElementById('reader-frame-box').innerHTML = `<iframe src="${pdfUrl}"></iframe>`;
+            document.getElementById('content-main-view').classList.add('hidden');
+            document.getElementById('content-reader-view').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        function closeReader() {
+            document.getElementById('content-reader-view').classList.add('hidden');
+            document.getElementById('content-main-view').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        function login() {
+            const name = document.getElementById('trainee-name').value.trim();
+            const id = document.getElementById('trainee-id').value.trim();
+            const program = document.getElementById('trainee-program').value;
+           
+            if(!name || !id || !program) {
+                alert('الرجاء إدخال اسم المتدرب الثلاثي، رقم الهوية، وتحديد اسم البرنامج التدريبي.');
+                return;
+            }
+
+            if(name.length <= 10) {
+                alert('يجب أن يتكون اسم المتدرب من أكثر من 10 خانات.');
+                return;
+            }
+
+            if(id.length !== 10) {
+                alert('يجب أن يكون رقم الهوية مكوناً من 10 أرقام.');
+                return;
+            }
+
+            currentUser = name;
+            currentId = id;
+            currentProgram = program;
+           
+            localStorage.setItem('current_trainee_name', name);
+            localStorage.setItem('current_trainee_id', id);
+            localStorage.setItem('current_trainee_program', program);
+
+            document.getElementById('welcome-user').innerText = `المتدرب: ${name} (${program})`;
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('main-app').classList.remove('hidden');
+            buildQuiz();
+        }
+
+        function loginAdmin() {
+            const pass = document.getElementById('admin-pass').value;
+            if (pass === "9876") {
+                openAdminPanel();
+            } else {
+                alert("رمز المرور غير صحيح! الرجاء المحاولة مرة أخرى.");
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('current_trainee_name');
+            location.reload();
+        }
+
+        function switchTab(tabId, btnElement) {
+            document.querySelectorAll('.tab-pane').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+           
+            if(btnElement) {
+                document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+                btnElement.classList.add('active');
+            }
+
+            if(tabId === 'content') {
+                closeReader();
+            }
+
+            window.scrollTo(0,0);
+        }
+
+        function buildQuiz() {
+            const container = document.getElementById('questions-container');
+            let html = '';
+            quizData.forEach((item, index) => {
+                html += `<div class="question-card">
+                    <p><i class="fa-solid fa-circle-question" style="color: var(--primary); margin-left: 5px;"></i> ${item.q}</p>
+                    <div class="options">`;
+                item.options.forEach((opt, optIndex) => {
+                    html += `<label><input type="radio" name="q${index}" value="${optIndex}"> ${opt}</label>`;
+                });
+                html += `</div></div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function submitQuiz() {
+            let unanswered = 0;
+            let score = 0;
+
+            quizData.forEach((item, index) => {
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                if(!selected) {
+                    unanswered++;
+                } else if(parseInt(selected.value) === item.answer) {
+                    score++;
+                }
+            });
+
+            if(unanswered > 0) {
+                alert(`تنبيه: لديك ${unanswered} أسئلة لم تقم بالإجابة عليها بعد. يرجى إكمال جميع الأسئلة قبل إرسال الاختبار.`);
+                return;
+            }
+
+            const percentage = (score / quizData.length) * 100;
+            const resultDiv = document.getElementById('quiz-result');
+           
+            if(percentage >= 80) {
+                resultDiv.style.color = "var(--success)";
+                resultDiv.innerHTML = `<i class="fa-solid fa-circle-check"></i> نتيجة الاختبار: ${score} من ${quizData.length} (${percentage.toFixed(1)}%). لقد اجتزت الاختبار بنجاح (الحد الأدنى 80%)!`;
+                setTimeout(() => switchTab('evaluation', document.querySelectorAll('.nav-links button')[2]), 1500);
+            } else {
+                resultDiv.style.color = "var(--danger)";
+                resultDiv.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> نتيجة الاختبار: ${score} من ${quizData.length} (${percentage.toFixed(1)}%). لم تجتز الاختبار (الحد الأدنى المطلوب هو 80%). يرجى المحاولة مرة أخرى.`;
+            }
+        }
+
+        function completeEvaluation() {
+            const q1 = document.getElementById('eval-q1').value;
+            const q2 = document.getElementById('eval-q2').value;
+           
+            const today = new Date().toLocaleDateString('ar-SA');
+            document.getElementById('cert-name').innerText = currentUser;
+            document.getElementById('cert-date').innerText = today;
+
+            saveRecordToStorage({
+                name: currentUser,
+                id: currentId,
+                program: currentProgram,
+                status: "اجتاز بنجاح",
+                eval: `${q1} - ${q2}`,
+                date: today
+            });
+
+            switchTab('certificate', document.querySelectorAll('.nav-links button')[3]);
+        }
+
+        function saveRecordToStorage(record) {
+            let records = JSON.parse(localStorage.getItem('trainee_records')) || [];
+            records = records.filter(r => r.id !== record.id);
+            records.push(record);
+            localStorage.setItem('trainee_records', JSON.stringify(records));
+        }
+
+        function deleteSingleRecord(id) {
+            if(confirm('هل أنت متأكد من حذف هذا السجل؟')) {
+                let records = JSON.parse(localStorage.getItem('trainee_records')) || [];
+                records = records.filter(r => r.id !== id);
+                localStorage.setItem('trainee_records', JSON.stringify(records));
+                filterRecords();
+            }
+        }
+
+        function renderAdminTable(recordsToDisplay) {
+            const tbody = document.getElementById('records-body');
+            let html = '';
+            if(recordsToDisplay.length === 0) {
+                html = `<tr><td colspan="7" style="color: var(--text-muted);">لا توجد سجلات مطابقة للبحث أو محفوظة حتى الآن</td></tr>`;
+            } else {
+                recordsToDisplay.forEach(r => {
+                    html += `<tr>
+                        <td>${r.name}</td>
+                        <td>${r.id}</td>
+                        <td>${r.program || '-'}</td>
+                        <td><span style="color: var(--success); font-weight: bold;">${r.status}</span></td>
+                        <td>${r.eval}</td>
+                        <td>${r.date}</td>
+                        <td><button class="delete-single-btn" onclick="deleteSingleRecord('${r.id}')"><i class="fa-solid fa-trash-can"></i> حذف</button></td>
+                    </tr>`;
+                });
+            }
+            tbody.innerHTML = html;
+        }
+
+        function openAdminPanel() {
+            const records = JSON.parse(localStorage.getItem('trainee_records')) || [];
+            document.getElementById('search-input').value = '';
+            renderAdminTable(records);
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('admin-screen').classList.remove('hidden');
+        }
+
+        function filterRecords() {
+            const query = document.getElementById('search-input').value.trim().toLowerCase();
+            const records = JSON.parse(localStorage.getItem('trainee_records')) || [];
+            const filtered = records.filter(r => r.name.toLowerCase().includes(query) || r.id.toLowerCase().includes(query));
+            renderAdminTable(filtered);
+        }
+
+        function backToLogin() {
+            document.getElementById('admin-screen').classList.add('hidden');
+            document.getElementById('login-screen').classList.remove('hidden');
+        }
+
+        function clearData() {
+            if(confirm('هل أنت متأكد من مسح جميع السجلات؟')) {
+                localStorage.removeItem('trainee_records');
+                openAdminPanel();
+            }
+        }
+    </script>
+</body>
+</html>
